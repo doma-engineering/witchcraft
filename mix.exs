@@ -3,12 +3,12 @@ defmodule Witchcraft.Mixfile do
 
   def project do
     [
-      app: :witchcraft,
+      app: :doma_witchcraft,
       aliases: aliases(),
       deps: deps(),
 
       # Versions
-      version: "1.0.3",
+      version: "1.0.4-doma",
       elixir: "~> 1.9",
 
       # Docs
@@ -16,7 +16,8 @@ defmodule Witchcraft.Mixfile do
       docs: docs(),
 
       # Hex
-      description: "Monads and other dark magic (monoids, functors, traversables, &c)",
+      description:
+        "Monads and other dark magic (monoids, functors, traversables, &c), forked by doma for maintenance and testing packagesets",
       package: package()
     ]
   end
@@ -24,28 +25,24 @@ defmodule Witchcraft.Mixfile do
   defp aliases do
     [
       quality: [
-          "test",
-          "credo --strict"
-        ]
+        "test",
+        "credo --strict"
+      ]
     ]
   end
 
   defp deps do
     [
-      {:benchfella,  "~> 0.3",  only: [:dev, :test]},
-      {:credo,       "~> 1.5",  only: [:dev, :test],        runtime: false},
-      {:inch_ex,     "~> 2.0",  only: [:dev, :docs, :test], runtime: false},
-
-      {:dialyxir,    "~> 1.1",  only: :dev,                 runtime: false},
-      {:earmark,     "~> 1.4",  only: :dev,                 runtime: false},
-      {:ex_doc,      "~> 0.23", only: :dev,                 runtime: false},
-
+      {:benchfella, "~> 0.3", only: [:dev, :test]},
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
+      {:inch_ex, "~> 2.0", only: [:dev, :docs, :test], runtime: false},
+      {:dialyxir, "~> 1.1", only: :dev, runtime: false},
+      {:earmark, "~> 1.4", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.23", only: :dev, runtime: false},
       {:exceptional, "~> 2.1"},
-
-      {:operator,    "~> 0.2"},
-
-      {:quark, git: "https://github.com/witchcrafters/quark.git", ref: "b05a8a0"},
-      {:type_class,  "~> 1.2"}
+      {:operator, "~> 0.2"},
+      {:doma_quark, "~> 2.3.2-doma2"},
+      {:type_class, "~> 1.2"}
     ]
   end
 
@@ -60,9 +57,13 @@ defmodule Witchcraft.Mixfile do
 
   defp package do
     [
+      name: "doma_witchcraft",
       licenses: ["Apache-2.0"],
-      links: %{"GitHub" => "https://github.com/witchcrafters/witchcraft"},
-      maintainers: ["Brooklyn Zelenka", "Steven Vandevelde"]
+      links: %{
+        "Github" => "https://github.com/doma-engineering/witchcraft",
+        "Upstream" => "https://github.com/witchcrafters/witchcraft"
+      },
+      maintainers: ["Jonn Mostovoy"]
     ]
   end
 end
