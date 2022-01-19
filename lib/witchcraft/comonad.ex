@@ -22,17 +22,14 @@ defclass Witchcraft.Comonad do
   """
 
   alias __MODULE__
+
   extend Witchcraft.Extend
+
+  use Witchcraft.Internal, deps: [Witchcraft.Extend]
+
   use Quark
 
   @type t :: any()
-
-  defmacro __using__(opts \\ []) do
-    quote do
-      use Witchcraft.Extend, unquote(opts)
-      import unquote(__MODULE__), unquote(opts)
-    end
-  end
 
   where do
     @doc """

@@ -118,21 +118,17 @@ defclass Witchcraft.Apply do
   """
 
   alias __MODULE__
-  use Quark
-
   alias Witchcraft.Functor
+
   extend Witchcraft.Functor
+
+  use Witchcraft.Internal, deps: [Witchcraft.Functor]
+
   use Witchcraft.Functor
+  use Quark
 
   @type t :: any()
   @type fun :: any()
-
-  defmacro __using__(opts \\ []) do
-    quote do
-      use Witchcraft.Functor, unquote(opts)
-      import unquote(__MODULE__), unquote(opts)
-    end
-  end
 
   where do
     @doc """

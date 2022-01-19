@@ -30,39 +30,16 @@ defclass Witchcraft.Foldable do
   alias __MODULE__
   alias Witchcraft.{Apply, Ord, Monad, Monoid, Semigroup, Unit}
 
-  import Kernel, except: [length: 1, max: 2, min: 2]
   import Exceptional.Safe, only: [safe: 1]
 
   require Foldable.EmptyError
+
+  use Witchcraft.Internal, overrides: [min: 2, max: 2, length: 1], deps: [Semigroup, Ord]
 
   use Witchcraft.Applicative
   use Quark
 
   @type t :: any()
-
-  defmacro __using__(opts \\ []) do
-    {:ok, new_opts} =
-      Keyword.get_and_update(opts, :except, fn except ->
-        {:ok, [length: 1, max: 2, min: 2] ++ (except || [])}
-      end)
-
-    if Access.get(opts, :override_kernel, true) do
-      quote do
-        use Witchcraft.Semigroup, unquote(opts)
-        use Witchcraft.Ord, unquote(opts)
-
-        import Kernel, unquote(new_opts)
-        import unquote(__MODULE__), unquote(opts)
-      end
-    else
-      quote do
-        use Witchcraft.Semigroup, unquote(opts)
-        use Witchcraft.Ord, unquote(opts)
-
-        import unquote(__MODULE__), unquote(new_opts)
-      end
-    end
-  end
 
   where do
     @doc ~S"""

@@ -23,21 +23,17 @@ defclass Witchcraft.Extend do
   """
 
   alias __MODULE__
+
   alias Witchcraft.Functor
 
   extend Witchcraft.Functor
+
+  use Witchcraft.Internal, deps: [Witchcraft.Functor]
 
   use Quark
 
   @type t :: any()
   @type colink :: (Extend.t() -> any())
-
-  defmacro __using__(opts \\ []) do
-    quote do
-      use Witchcraft.Functor, unquote(opts)
-      import unquote(__MODULE__), unquote(opts)
-    end
-  end
 
   where do
     @doc """

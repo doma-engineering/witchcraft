@@ -16,34 +16,14 @@ defclass Witchcraft.Ord do
         ↓
        Ord    [compare/2]
   """
+  alias __MODULE__
 
   extend Witchcraft.Setoid
 
+  use Witchcraft.Internal, overrides: [<: 2, >: 2, <=: 2, >=: 2]
+
   @type t :: any()
   @type ordering :: :lesser | :equal | :greater
-
-  alias __MODULE__
-  import Kernel, except: [<: 2, >: 2, <=: 2, >=: 2]
-
-  defmacro __using__(opts \\ []) do
-    {:ok, new_opts} =
-      Keyword.get_and_update(opts, :except, fn except ->
-        {:ok, [<: 2, >: 2, <=: 2, >=: 2] ++ (except || [])}
-      end)
-
-    if Access.get(opts, :override_kernel, true) do
-      quote do
-        import Kernel, unquote(new_opts)
-        use Witchcraft.Semigroupoid, unquote(opts)
-        import unquote(__MODULE__), unquote(opts)
-      end
-    else
-      quote do
-        use Witchcraft.Semigroupoid, unquote(opts)
-        import unquote(__MODULE__), unquote(new_opts)
-      end
-    end
-  end
 
   where do
     @doc """

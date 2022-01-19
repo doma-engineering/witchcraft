@@ -18,19 +18,15 @@ defclass Witchcraft.Bifunctor do
 
   """
 
+  alias __MODULE__
+
   extend Witchcraft.Functor
 
-  alias __MODULE__
+  use Witchcraft.Internal
+
   use Quark
 
   @type t :: any()
-
-  defmacro __using__(opts \\ []) do
-    quote do
-      use Witchcraft.Functor, unquote(opts)
-      import unquote(__MODULE__), unquote(opts)
-    end
-  end
 
   where do
     @doc """

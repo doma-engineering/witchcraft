@@ -25,6 +25,8 @@ defclass Witchcraft.Traversable do
   extend Witchcraft.Foldable
   extend Witchcraft.Functor
 
+  use Witchcraft.Internal, deps: [Witchcraft.Foldable, Witchcraft.Functor]
+
   use Witchcraft.Applicative
   use Witchcraft.Foldable, except: [equal?: 2]
 
@@ -32,14 +34,6 @@ defclass Witchcraft.Traversable do
 
   @type t :: any()
   @type link :: (any() -> Traversable.t())
-
-  defmacro __using__(opts \\ []) do
-    quote do
-      use Witchcraft.Foldable, unquote(opts)
-      use Witchcraft.Functor, unquote(opts)
-      import unquote(__MODULE__), unquote(opts)
-    end
-  end
 
   where do
     @doc """

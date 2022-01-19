@@ -15,16 +15,12 @@ defclass Witchcraft.Monoid do
   """
 
   alias __MODULE__
+
   extend Witchcraft.Semigroup, alias: true
 
-  @type t :: any()
+  use Witchcraft.Internal, deps: [Witchcraft.Semigroup]
 
-  defmacro __using__(opts \\ []) do
-    quote do
-      use Witchcraft.Semigroup, unquote(opts)
-      import unquote(__MODULE__), unquote(opts)
-    end
-  end
+  @type t :: any()
 
   where do
     @doc ~S"""

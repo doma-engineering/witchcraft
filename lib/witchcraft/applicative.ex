@@ -26,16 +26,12 @@ defclass Witchcraft.Applicative do
   """
 
   alias __MODULE__
+
   extend Witchcraft.Apply
 
-  @type t :: any()
+  use Witchcraft.Internal, deps: [Witchcraft.Apply]
 
-  defmacro __using__(opts \\ []) do
-    quote do
-      use Witchcraft.Apply, unquote(opts)
-      import unquote(__MODULE__), unquote(opts)
-    end
-  end
+  @type t :: any()
 
   where do
     @doc """
