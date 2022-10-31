@@ -9,7 +9,7 @@ defmodule Witchcraft.Mixfile do
       preferred_cli_env: [quality: :test],
 
       # Versions
-      version: "1.0.4-doma",
+      version: "1.0.5-doma",
       elixir: "~> 1.9",
 
       # Docs
@@ -43,7 +43,7 @@ defmodule Witchcraft.Mixfile do
       {:exceptional, "~> 2.1"},
       {:operator, "~> 0.2"},
       {:doma_quark, "~> 2.3.2-doma2"},
-      {:type_class, "~> 1.2"}
+      {:doma_type_class, "~> 1.2.10-blazing"}
     ]
   end
 
