@@ -14,8 +14,8 @@ defmodule Witchcraft.Extend.FunctionBench do
   # ---------- #
 
   defp fun(x), do: x + 1
-  defp twice(f), do: f <|> f
-  defp thrice(f), do: f <|> f <|> f
+  defp twice(f), do: compose(f, f)
+  defp thrice(f), do: compose(f, compose(f, f))
 
   ##########
   # Extend #
