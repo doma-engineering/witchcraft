@@ -6,6 +6,7 @@ defmodule Witchcraft.Mixfile do
       app: :doma_witchcraft,
       aliases: aliases(),
       deps: deps(),
+      preferred_cli_env: [quality: :test],
 
       # Versions
       version: "1.0.4-doma",
