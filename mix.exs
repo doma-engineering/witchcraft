@@ -9,7 +9,7 @@ defmodule Witchcraft.Mixfile do
       preferred_cli_env: [quality: :test],
 
       # Versions
-      version: "1.0.5-doma",
+      version: "1.0.6-doma",
       elixir: "~> 1.9",
 
       # Docs
