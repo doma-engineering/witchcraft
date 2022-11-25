@@ -2,14 +2,14 @@
 # and its dependencies with the aid of the Mix.Config module.
 import Config
 
-toBool = fn
-  "true", _ -> true
-  "false", _ -> false
-  nil, default -> default
-end
+# toBool = fn
+#   "true", _ -> true
+#   "false", _ -> false
+#   nil, default -> default
+# end
 
-config :type_class,
-  skip_check_props?: toBool.(System.get_env("SKIP_PROPS_CHECK"), true)
+# config :doma_type_class,
+#   force_type_class: false
 
 
 # This configuration is loaded before any dependency and is restricted
