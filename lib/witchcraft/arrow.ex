@@ -84,8 +84,8 @@ defclass Witchcraft.Arrow do
       f = fn x -> "#{x}-#{x}" end
       g = &inspect/1
 
-      left = Arrow.arrowize(sample, f) <|> Arrow.arrowize(sample, g)
-      right = Arrow.arrowize(sample, f <|> g)
+      left = compose(Arrow.arrowize(sample, f), Arrow.arrowize(sample, g))
+      right = Arrow.arrowize(sample, compose(f, g))
 
       equal?(pipe(a, left), pipe(a, right))
     end
@@ -106,8 +106,8 @@ defclass Witchcraft.Arrow do
       f = Arrow.arrowize(sample, fn x -> "#{x}-#{x}" end)
       g = Arrow.arrowize(sample, &inspect/1)
 
-      left = Witchcraft.Arrow.first(f <|> g)
-      right = Witchcraft.Arrow.first(f) <|> Witchcraft.Arrow.first(g)
+      left = Witchcraft.Arrow.first(compose(f, g))
+      right = compose(Witchcraft.Arrow.first(f), Witchcraft.Arrow.first(g))
 
       equal?(pipe(a, left), pipe(a, right))
     end
@@ -128,8 +128,8 @@ defclass Witchcraft.Arrow do
       f = Arrow.arrowize(sample, fn x -> "#{x}-#{x}" end)
       g = Arrow.arrowize(sample, &inspect/1)
 
-      left = Witchcraft.Arrow.second(f <|> g)
-      right = Witchcraft.Arrow.second(f) <|> Witchcraft.Arrow.second(g)
+      left = Witchcraft.Arrow.second(compose(f, g))
+      right = compose(Witchcraft.Arrow.second(f), Witchcraft.Arrow.second(g))
 
       equal?(pipe(a, left), pipe(a, right))
     end
@@ -200,8 +200,8 @@ defclass Witchcraft.Arrow do
       x = Arrow.arrowize(sample, Witchcraft.Arrow.product(&Quark.id/1, g))
       y = Witchcraft.Arrow.first(f)
 
-      left = x <|> y
-      right = y <|> x
+      left = compose(x, y)
+      right = compose(y, x)
 
       equal?(pipe(a, left), pipe(a, right))
     end
@@ -237,22 +237,6 @@ defclass Witchcraft.Arrow do
   """
   @spec beside(Arrow.t(), Arrow.t()) :: Arrow.t()
   defalias beside(a, b), as: :product
-
-  @doc """
-  Operator alias for `product/2`.
-
-  ## Examples
-
-      iex> arr = fn x -> x - 10 end ^^^ fn y -> y <> "!" end
-      ...> arr.({42, "Hi"})
-      {32, "Hi!"}
-
-      iex> {42, "Hi"} |> (fn x -> x - 10 end ^^^ fn y -> y <> "!" end).()
-      {32, "Hi!"}
-
-  """
-  @spec Arrow.t() ^^^ Arrow.t() :: Arrow.t()
-  defalias a ^^^ b, as: :product
 
   @doc """
   Swap positions of elements in a tuple.
@@ -334,7 +318,7 @@ defclass Witchcraft.Arrow do
   """
   @spec fanout(Arrow.t(), Arrow.t()) :: Arrow.t()
   def fanout(arrow_f, arrow_g) do
-    arrow_f |> arrowize(&split/1) <~> (arrow_f ^^^ arrow_g)
+    arrow_f |> arrowize(&split/1) <~> product(arrow_f, arrow_g)
   end
 
   @doc """

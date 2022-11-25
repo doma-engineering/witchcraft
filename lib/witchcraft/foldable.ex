@@ -30,6 +30,7 @@ defclass Witchcraft.Foldable do
   alias __MODULE__
   alias Witchcraft.{Apply, Ord, Monad, Monoid, Semigroup, Unit}
 
+  import Kernel, except: [length: 1, max: 2, min: 2, then: 2]
   import Exceptional.Safe, only: [safe: 1]
 
   require Foldable.EmptyError
@@ -53,9 +54,9 @@ defclass Witchcraft.Foldable do
     ## Examples
 
         iex> sum = fn xs -> right_fold(xs, 0, &+/2) end
-        ...> sum.([1, 2, 3])
+        iex> sum.([1, 2, 3])
         6
-        ...> sum.([4, 5, 6])
+        iex> sum.([4, 5, 6])
         15
 
     """
@@ -119,9 +120,9 @@ defclass Witchcraft.Foldable do
   ## Examples
 
       iex> sum = fn xs -> right_fold(xs, 0, &+/2) end
-      ...> sum.([1, 2, 3])
+      iex> sum.([1, 2, 3])
       6
-      ...> sum.([4, 5, 6])
+      iex> sum.([4, 5, 6])
       15
 
       iex> left_fold([1, 2, 3], [], fn(acc, x) -> [x | acc] end)
@@ -264,7 +265,7 @@ defclass Witchcraft.Foldable do
   ## Examples
 
       iex> use Witchcraft.Foldable
-      ...> length(%{})
+      iex> length(%{})
       0
       iex> length(%{a: 1, b: 2})
       2
@@ -336,7 +337,7 @@ defclass Witchcraft.Foldable do
       2
 
   """
-  @spec max(Foldable.t(), by: (any, any -> Order.ordering())) :: Ord.t()
+  @spec max(Foldable.t(), by: (any, any -> Ord.ordering())) :: Ord.t()
   def max(foldable, by: comparator) do
     Witchcraft.Foldable.right_fold(foldable, fn focus, acc ->
       case comparator.(focus, acc) do
@@ -355,9 +356,9 @@ defclass Witchcraft.Foldable do
   ## Examples
 
       iex> use Witchcraft.Foldable
-      ...> max([2, 3, 1])
+      iex> max([2, 3, 1])
       3
-      ...> max([[4], [1, 2, 3, 4]])
+      iex> max([[4], [1, 2, 3, 4]])
       [4]
 
       %BinaryTree{
@@ -394,7 +395,7 @@ defclass Witchcraft.Foldable do
       8
 
   """
-  @spec min(Foldable.t(), by: (any(), any() -> Order.t())) :: any() | Maybe.t()
+  @spec min(Foldable.t(), by: (any(), any() -> Ord.t())) :: any()
   def min(foldable, by: comparitor) do
     right_fold(foldable, fn focus, acc ->
       case comparitor.(focus, acc) do
@@ -413,9 +414,9 @@ defclass Witchcraft.Foldable do
   ## Examples
 
       iex> use Witchcraft.Foldable
-      ...> min([2, 3, 1])
+      iex> min([2, 3, 1])
       1
-      ...> min([[4], [1, 2, 3, 4]])
+      iex> min([[4], [1, 2, 3, 4]])
       [1, 2, 3, 4]
 
       %BinaryTree{
@@ -613,7 +614,7 @@ defclass Witchcraft.Foldable do
   ## Examples
 
       iex> import Integer
-      ...> all?([1, 2, 3], &is_odd/1)
+      iex> all?([1, 2, 3], &is_odd/1)
       false
 
       %BinaryTree{
@@ -667,7 +668,7 @@ defclass Witchcraft.Foldable do
   ## Examples
 
       iex> require Integer
-      ...> any?([1, 2, 3], &Integer.is_odd/1)
+      iex> any?([1, 2, 3], &Integer.is_odd/1)
       true
 
       %BinaryTree{
@@ -786,6 +787,6 @@ defclass Witchcraft.Foldable do
       ]
 
   """
-  @spec then_traverse(Apply.fun(), Foldable.t()) :: Apply.t()
+  @spec then_through(Apply.fun(), Foldable.t()) :: Apply.t()
   def then_through(fun, traversable), do: then_traverse(traversable, fun)
 end

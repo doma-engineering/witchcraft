@@ -210,8 +210,6 @@ defclass Witchcraft.Chain do
   @doc """
   Compose link functions to create a new link function.
 
-  Note that this runs the same direction as `<|>` ("the math way").
-
   This is `pipe_compose_link/2` with arguments flipped.
 
   ## Examples
@@ -254,7 +252,7 @@ defclass Witchcraft.Chain do
 
   Sequences chainable actions. Note that each line must be of the same type.
 
-  For a version with `return`, please see `Witchcraft.Monad.do/2`
+  For a version with `return`, please see `Witchcraft.Monad.monad/2`
 
   ## Examples
 

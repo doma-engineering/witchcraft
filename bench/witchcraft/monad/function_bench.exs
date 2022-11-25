@@ -1,4 +1,6 @@
 defmodule Witchcraft.Monad.FunctionBench do
+  @moduledoc false
+
   use Benchfella
   use Witchcraft.Monad
   use Quark
@@ -11,7 +13,7 @@ defmodule Witchcraft.Monad.FunctionBench do
   # Data Types #
   # ---------- #
 
-  def fun(x), do: "#{inspect x}-#{inspect x}"
+  def fun(x), do: "#{inspect(x)}-#{inspect(x)}"
 
   #########
   # Monad #
@@ -22,10 +24,10 @@ defmodule Witchcraft.Monad.FunctionBench do
       &fun/1
 
       fn f ->
-        fn g -> f <|> g <|> g <|> f end
+        fn g -> compose(f, compose(g, compose(g, f))) end
       end
 
-      fn h -> h <|> h end
+      fn h -> compose(h, h) end
     end
   end
 
@@ -34,29 +36,30 @@ defmodule Witchcraft.Monad.FunctionBench do
       &fun/1
 
       fn f ->
-        fn g -> f <|> g <|> g <|> f end
+        fn g -> compose(f, compose(g, compose(g, f))) end
       end
 
-      fn h -> h <|> h end
+      fn h -> compose(h, h) end
     end
   end
 
   bench "async_chain/2" do
     (&fun/1)
     |> async_chain(fn f ->
-      fn g -> f <|> g <|> g <|> f end
+      fn g -> compose(f, compose(g, compose(g, f))) end
     end)
-    |> async_chain(fn h -> h <|> h end)
+    |> async_chain(fn h -> compose(h, h) end)
   end
 
   bench "async_draw/2" do
-    fn h ->h <|> h end
-    |> async_draw((fn f ->
-      fn g ->
-        f <|> g <|> g <|> f
+    fn h -> compose(h, h) end
+    |> async_draw(
+      fn f ->
+        fn g ->
+          compose(f, compose(g, compose(g, f)))
+        end
       end
-    end
-    |> async_draw(&fun/1)))
+      |> async_draw(&fun/1)
+    )
   end
-
 end

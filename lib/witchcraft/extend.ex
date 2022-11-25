@@ -62,8 +62,8 @@ defclass Witchcraft.Extend do
         arg2 = generate(monoid)
         arg3 = generate(monoid)
 
-        f = fn x -> x <|> fn a -> a <> a end end
-        g = fn y -> y <|> fn b -> b <> b <> b end end
+        f = fn x -> compose(x, fn a -> a <> a end) end
+        g = fn y -> compose(y, fn b -> b <> b <> b end) end
 
         left =
           a
