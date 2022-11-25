@@ -9,7 +9,7 @@ defmodule Witchcraft.Mixfile do
       preferred_cli_env: [quality: :test],
 
       # Versions
-      version: "1.0.4-doma",
+      version: "1.0.5-doma",
       elixir: "~> 1.9",
 
       # Docs
@@ -36,14 +36,14 @@ defmodule Witchcraft.Mixfile do
     [
       {:benchfella, "~> 0.3", only: [:dev, :test]},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
-      {:inch_ex, "~> 2.0", only: [:dev, :docs, :test], runtime: false},
+      {:inch_ex, github: "rrrene/inch_ex", only: [:dev, :docs, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: :dev, runtime: false},
       {:earmark, "~> 1.4", only: :dev, runtime: false},
       {:ex_doc, "~> 0.23", only: :dev, runtime: false},
       {:exceptional, "~> 2.1"},
       {:operator, "~> 0.2"},
-      {:doma_quark, "~> 2.3.2-doma2"},
-      {:type_class, "~> 1.2"}
+      {:doma_quark, "~> 2.3.3-doma"},
+      {:doma_type_class, "~> 1.2.11-blazing"}
     ]
   end
 
