@@ -80,22 +80,6 @@ defclass Witchcraft.Semigroupoid do
   def pipe_compose(b, a), do: compose(a, b)
 
   @doc """
-  Composition operator "the math way". Alias for `compose/2`.
-
-  ## Examples
-
-      iex> times_ten_plus_one =
-      ...>       fn x -> x + 1  end
-      ...>   <|> fn y -> y * 10 end
-      ...>
-      ...> times_ten_plus_one.(5)
-      51
-
-  """
-  @spec t() <|> any() :: t()
-  def g <|> f, do: compose(g, f)
-
-  @doc """
   Composition operator "the pipe way". Alias for `pipe_compose/2`.
 
   ## Examples

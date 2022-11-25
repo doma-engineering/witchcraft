@@ -41,12 +41,9 @@ defmodule Witchcraft.Semigroupoid.FunctionBench do
   # Operators #
   # --------- #
 
-  bench("<|>/2", do: (&g/1) <|> (&f/1))
   bench("<~>/2", do: (&f/1) <~> (&g/1))
 
-  bench("direct <|>/2", do: ((&g/1) <|> (&f/1)).(1))
   bench("direct <~>/2", do: 1 |> ((&f/1) <~> (&g/1)).())
 
-  bench("apply <|>/2", do: apply((&g/1) <|> (&f/1), [1]))
   bench("apply <~>/2", do: apply((&f/1) <~> (&g/1), [1]))
 end

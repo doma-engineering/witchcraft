@@ -210,8 +210,6 @@ defclass Witchcraft.Chain do
   @doc """
   Compose link functions to create a new link function.
 
-  Note that this runs the same direction as `<|>` ("the math way").
-
   This is `pipe_compose_link/2` with arguments flipped.
 
   ## Examples
