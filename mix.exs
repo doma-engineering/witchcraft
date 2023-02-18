@@ -64,7 +64,7 @@ defmodule Witchcraft.Mixfile do
         "Github" => "https://github.com/doma-engineering/witchcraft",
         "Upstream" => "https://github.com/witchcrafters/witchcraft"
       },
-      maintainers: ["Jonn Mostovoy"]
+      maintainers: ["doma.dev"]
     ]
   end
 end
